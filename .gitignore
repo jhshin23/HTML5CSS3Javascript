@@ -3,6 +3,20 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# VSCode 설정 폴더
+.vscode/
+
+# macOS 시스템 파일
+.DS_Store
+
+# Windows 시스템 파일
+Thumbs.db
+
+# 백업 파일
+*.bak
+*.tmp
+*.log
+
 # User-specific files
 *.rsuser
 *.suo
