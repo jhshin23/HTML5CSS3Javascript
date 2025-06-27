@@ -1,0 +1,62 @@
+import React, { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ShoppingCart } from "lucide-react";
+
+const books = [
+  { id: 1, title: "Clean Code", author: "Robert C. Martin", price: 30 },
+  { id: 2, title: "You Don't Know JS", author: "Kyle Simpson", price: 25 },
+  { id: 3, title: "The Pragmatic Programmer", author: "Andrew Hunt", price: 35 },
+];
+
+export default function Bookstore() {
+  const [cart, setCart] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const addToCart = (book) => {
+    setCart([...cart, book]);
+  };
+
+  return (
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">📚 온라인 서점</h1>
+      <Input
+        placeholder="책 제목을 검색하세요..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="mb-4"
+      />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {books
+          .filter((book) =>
+            book.title.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((book) => (
+            <Card key={book.id} className="p-4 flex justify-between items-center">
+              <CardContent>
+                <h2 className="text-lg font-semibold">{book.title}</h2>
+                <p className="text-sm text-gray-500">{book.author}</p>
+                <p className="text-lg font-bold">${book.price}</p>
+              </CardContent>
+              <Button onClick={() => addToCart(book)} className="ml-2">
+                <ShoppingCart className="mr-2 h-4 w-4" /> 담기
+              </Button>
+            </Card>
+          ))}
+      </div>
+      <div className="mt-6 border-t pt-4">
+        <h2 className="text-xl font-semibold">🛒 장바구니</h2>
+        {cart.length === 0 ? (
+          <p className="text-gray-500">장바구니가 비어 있습니다.</p>
+        ) : (
+          <ul>
+            {cart.map((book, index) => (
+              <li key={index} className="py-2">{book.title} - ${book.price}</li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
